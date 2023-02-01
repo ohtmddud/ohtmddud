@@ -151,7 +151,7 @@ class Marble{
 	int rx;
 	int ry;
 	int bx;
-	int by;
+	int by; 
 	int cnt;
 	
 	public Marble(int rx, int ry, int bx, int by, int cnt) {
