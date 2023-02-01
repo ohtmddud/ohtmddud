@@ -7,160 +7,152 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+class Ball{
+	int x;
+	int y;
+	int cnt;
+
+	public Ball(int x, int y, int cnt) {
+		this.x = x;
+		this.y = y;
+		this.cnt = cnt;
+	}
+}
+
 public class problem_13460 {
-	static int N, M;
-	static char[][] map;
-	static boolean [][][][] visited;
-	static int holeX, holeY;
-	static Marble blue, red;
+	static int N,M;
+	static char[][]	map;
+	static Ball red, blue;
+	static boolean[][][][] visited;
+	static int result = -1;
+	// 상하좌우
+	static int[] dx = {-1, 1, 0, 0};
+	static int[] dy = {0, 0, -1, 1};
 	
-	static int[] dx = {-1, 0, 1, 0};
-	static int[] dy = {0, 1, 0, -1};
+	static void bfs(Ball red, Ball blue) {
+		Queue<Ball> redQ = new LinkedList<>();
+		Queue<Ball> blueQ = new LinkedList<>();
+		
+		redQ.offer(red);
+		blueQ.offer(blue);
+		
+		//구슬 위치 방문처리
+		visited[red.x][red.y][blue.x][blue.y] = true;
+		
+		while (!redQ.isEmpty() && !blueQ.isEmpty()) {
+			Ball nred = redQ.poll();
+			Ball nblue = blueQ.poll();
+			
+			// 10회 이상
+			if(nred.cnt > 10) {
+				result = -1;
+				return;
+			}
+			
+			// 파란색 나감.
+			if(map[nblue.x][nblue.y] == 'O') {
+				continue;
+			}
+			
+			// 빨간색 나감. 파란색 못 나감
+			if(map[nred.x][nred.y] == 'O') {
+				result = nred.cnt;
+				return;
+			}
+			
+			// 상하좌우 기울이기
+			for(int i = 0; i < 4; i++) {
+				
+				// 파란색
+				int bx = nblue.x;
+				int by = nblue.y;
+				while(true) {
+					bx += dx[i];
+					System.out.println(dx[i]);
+					by += dy[i];
+					
+					// 구멍
+					if(map[bx][by] == 'O') {
+						break;
+					}
+					// 벽
+					else if(map[bx][by] == '#') {
+						bx -= dx[i];
+						by -= dy[i];
+						break;
+					}
+				}
+				
+				// 빨간색
+				int rx = nred.x;
+				int ry = nred.y;
+				while(true) {
+					rx += dx[i];
+					ry += dy[i];
+					// 구멍
+					if(map[rx][ry] == 'O') {
+						break;
+					}
+					// 벽
+					else if(map[rx][ry] == '#') {
+						rx -= dx[i];
+						ry -= dy[i];
+						break;
+					}
+				}
+				
+				// 두개 위치가 동일
+				if(bx == rx && by == ry && map[rx][ry] != 'O') {
+					// 이동한 거리가 던 긴 쪽
+					int r_dis = Math.abs(nred.x - rx) + Math.abs(nred.y - ry);
+					int b_dis = Math.abs(nblue.x - bx) + Math.abs(nblue.y - by);
+					
+					if(r_dis > b_dis) { // 빨간색
+						rx -= dx[i];
+						ry -= dy[i];
+					} else { // 파란색
+						bx -= dx[i];
+						by -= dy[i];
+					}
+				}
+				
+				if(!visited[rx][ry][bx][by]) {
+					// 방문
+					visited[rx][ry][bx][by] = true;
+					// 큐에 넣기
+					redQ.offer(new Ball(rx, ry, nred.cnt + 1));
+					blueQ.offer(new Ball(bx, by, nblue.cnt + 1));
+				}
+			}
+			
+		}
+	}
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringTokenizer st;
 		
+		st = new StringTokenizer(br.readLine(), " ");
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
 		map = new char[N][M];
-		visited = new boolean[N][M][N][M];
+		visited = new boolean [N][M][N][M];
 		
 		for(int i = 0; i < N; i++) {
-			String str = br.readLine()	;
+			String row = br.readLine();
 			for(int j = 0; j < M; j++) {
-				map[i][j] = str.charAt(j);
-				
-				if(map[i][j] == '0') {
-					holeX = i;
-					holeY = j;
-				} else if(map[i][j] == 'B') {
-					blue = new Marble(0, 0, i, j, 0);
-				} else if(map[i][j] == 'R') {
-					red = new Marble(i, j, 0, 0, 0);
+				map[i][j] = row.charAt(j);
+				if(map[i][j] == 'R') {
+					red = new Ball(i, j, 0);
+				}
+				if(map[i][j] == 'B') {
+					blue = new Ball(i, j, 0);
 				}
 			}
 		}
-		System.out.println(bfs());
-		br.close();
-	}
-	
-	public static int bfs() {
-		Queue<Marble> que = new LinkedList<>();
-		que.add(new Marble(red.rx, red.ry, blue.bx, blue.by, 1));
-		visited[red.rx][red.ry][blue.bx][blue.by] = true;
-		
-		while(!que.isEmpty()) {
-			Marble marble = que.poll();
-			
-			int curRx = marble.rx;
-			int curRy = marble.ry;
-			int curBx = marble.bx;
-			int curBy = marble.by;
-			int curCnt = marble.cnt;
-			
-			if(curCnt > 10) {
-				return -1;
-			}
-			
-			for(int i = 0; i < 4; i++) {
-				int newRx = curRx;
-				int newRy = curRy;
-				int newBx = curBx;
-				int newBy = curBy;
-				
-				boolean isRedHole = false;
-				boolean isBlueHole = false;
-				
-				// 빨간 구슬 이동 -> # 벽을 만날 때 까지 이동
-				while(map[newRx + dx[i]][newRy + dy[i]] != '#') {
-					newRx += dx[i];
-					newRy += dy[i];
-					
-					// 이동 중 구멍을 만날 경우
-					if(newRx == holeX && newRy == holeY) {
-						isRedHole = true;
-						break;
-					}
-				}
-				
-				// 파란 구슬 이동 -> # 벽을 만날 때 까지 이동
-				while(map[newBx + dx[i]][newBy + dy[i]] != '#') {
-					newBx += dx[i];
-					newBy += dy[i];
-					
-					// 이동 중 구멍을 만날 경우
-					if(newBx == holeX && newBy == holeY) {
-						isBlueHole = true;
-						break;
-					}
-				}
-				
-				if(isBlueHole) { // 파란 구슬이 구멍에 빠지면 무조건 실패
-					continue; // 하지만 큐에 남은 다른 좌표도 봐야하니 다음으로
-				}
-				
-				if(isRedHole && !isBlueHole) { // 빨간 구슬만 구멍에 빠지면 성공
-					return curCnt;
-				}
-				
-				// 둘 다 구멍에 빠지지 않았는데 이동할 위치가 같은 경우 -> 위치 조정
-				if(newRx == newBx && newRy == newBy) {
-					if(i == 0) { // 위쪽으로 기울이기, 더 큰 x 값을 가지는 구슬이 뒤로 감
-						if(curRx > curBx) {
-							newRx -= dx[i];
-						} else {
-							newBx -= dx[i];
-						}
-					} else if(i == 1) { // 오른쪽으로 기울이기, 더 작은 y값을 가지는 구슬이 뒤로 감
-						if(curRy < curBy) {
-							newRy -= dy[i];
-						} else {
-							newBy -= dy[i];
-						}
-					} else if(i == 2) { // 아래쪽으로 기울이기, 더 작은 x값을 가지는 구슬이 뒤로 감
-						if(curRx < curBx) {
-							newRx -= dx[i];
-						} else {
-							newBx -= dx[i];
-						}
-					} else { // 왼쪽으로 기울이기, 더 큰 y값을 가지는 구슬이 뒤로 감
-						if(curRy > curBy) {
-							newRy -= dy[i];
-						} else {
-							newBy -= dy[i];
-						}
-					}
-				}
-				
-				// 두 구슬이 이동할 위치가 처음 방문하는 곳인 경우만 이동 -> 큐에 추가
-				if(!visited[newRx][newRy][newBx][newBy]) {
-					visited[newRx][newRy][newBx][newBy] = true;
-					que.add(new Marble(newRx, newRy, newBx, newBy, curCnt + 1));
-				}
-			}
-		}
-		
-		return -1;
-	}
-	
-}
-
-class Marble{
-	int rx;
-	int ry;
-	int bx;
-	int by; 
-	int cnt;
-	
-	public Marble(int rx, int ry, int bx, int by, int cnt) {
-		super();
-		this.rx = rx;
-		this.ry = ry;
-		this.bx = bx;
-		this.by = by;
-		this.cnt = cnt;
+		bfs(red, blue);
+		System.out.println(result);
 	}
 }
 
