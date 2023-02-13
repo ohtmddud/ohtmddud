@@ -50,16 +50,26 @@ public class Sort {
 		return lo;
 	}
 	
-	
 	public void CountSort() {
-		
+		int[] arr2 = new int[arr.length+1];
+		int[] arr3 = new int[arr.length];
+		for(int i=0; i<arr.length; i++) {
+			arr2[arr[i]]++;
+		}
+		for(int i=1; i<arr2.length; i++) {
+			arr2[i] += arr2[i-1];
+		}
+		for(int i=arr.length-1; i>=0; i--) {
+			arr[--arr2[arr[i]]] = arr[i];
+		}
+		arr = arr3.clone();
 	}
 	
 	public static void main(String[] hi) {
 		System.out.println("hi");
 		Sort sort = new Sort();
-		
-		sort.QuickSort(0, arr.length-1);
+		sort.CountSort();
+//		sort.QuickSort(0, arr.length-1);
 //		sort.SelectSort();
 //		sort.InsertionSort();
 		for(int i=0; i<arr.length; i++) {
