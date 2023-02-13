@@ -30,9 +30,26 @@ public class Sort {
 		}
 	}
 	
-	public void QuickSort() {
-		
+	public void QuickSort(int lo, int hi) {
+		int part = partition(lo, hi);
+		if(lo<part-1) QuickSort(lo, part-1);
+		if(hi>part) QuickSort(part, hi);
 	}
+	
+	public int partition(int lo, int hi) {
+		int pivot = arr[(lo + hi)/2];
+		while(lo<=hi) {
+			while(arr[lo]<pivot) lo++;
+			while(arr[hi]>pivot) hi--;
+			if(lo<=hi) {
+				swap(arr, lo, hi);
+				lo++;
+				hi--;
+			}
+		}
+		return lo;
+	}
+	
 	
 	public void CountSort() {
 		
@@ -42,8 +59,9 @@ public class Sort {
 		System.out.println("hi");
 		Sort sort = new Sort();
 		
+		sort.QuickSort(0, arr.length-1);
 //		sort.SelectSort();
-		sort.InsertionSort();
+//		sort.InsertionSort();
 		for(int i=0; i<arr.length; i++) {
 			System.out.print(arr[i] + " → ");
 		}
