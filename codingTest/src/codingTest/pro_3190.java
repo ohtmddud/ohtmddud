@@ -36,13 +36,13 @@ public class pro_3190 {
 		apple = Integer.parseInt(br.readLine());
 		for(int i = 0; i < apple; i++) {
 			st = new StringTokenizer(br.readLine());
-			int x = Integer.parseInt(st.nextToken()) -1;
-			int y = Integer.parseInt(st.nextToken()) -1;
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
 			map[x][y] = 1;
 		}
 		L = Integer.parseInt(br.readLine());
 		for(int i = 0; i < apple; i++) {
-			st = new StringTokenizer(br.readLine(), " ");
+			st = new StringTokenizer(br.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			String y = st.nextToken();
 			hm.put(x, y);
@@ -76,7 +76,7 @@ public class pro_3190 {
 		while(true) {
 			// 시간
 			time++; 
-			
+			System.out.println(x + ", " + y);
 			// 이동
 			int nx = x + dx[d];
 			int ny = y + dy[d];
@@ -103,11 +103,11 @@ public class pro_3190 {
 					d += 1;
 					if(d==4) {
 						d=0;
-					}else {
-						d -= 1;
-						if(d==-1) {
-							d=3;
-						}
+					}
+				} else {
+					d -= 1;
+					if(d==-1) {
+						d=3;
 					}
 				}
 			}
