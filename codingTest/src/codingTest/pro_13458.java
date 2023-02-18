@@ -28,14 +28,21 @@ public class pro_13458 {
 		System.out.println(B);
 		System.out.println(C);
 		
-		System.out.println(pro.min()); 
+		System.out.println("답:" + pro.min()); 
 	}
 	public int min() {
-		int min = 0;
+		int min = N;
 		for(int i=0; i<N; i++) {
-			int remain = B - A[i];
+			int remain = A[i] - B;
+			System.out.println("remain: " + remain);
 			if(remain>0) {
-				int cnt = Math.round(remain/C);
+				int cnt = 0;
+				if(remain % C != 0) {
+					cnt = Math.round(remain/C) + 1;
+				} else {
+					cnt = Math.round(remain/C);
+				}
+				min += cnt;
 			}
 		}
 		
