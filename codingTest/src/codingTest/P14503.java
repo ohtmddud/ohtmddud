@@ -56,6 +56,7 @@ public class P14503 {
 		
 		if(ry>=0 && ry<M && rx>=0 && rx<N && map[ry][rx]!=1) {
 			dfs(ry,rx,d);
+			
 		}
 		
 	}
