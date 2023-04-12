@@ -26,11 +26,15 @@ public class Test {
         // 드라이버 위치 본인이 저장한 위치에 알맞게 넣는다
 
 		WebDriver driver = new ChromeDriver();
-
-		driver.get("Site");
-
-		driver.findElement(By.id("loginId")).sendKeys("id");
-		driver.findElement(By.id("loginPwd")).sendKeys("password");
+		
+		String url = "";
+		driver.get(url);
+		
+		String MyId = "";
+		String MyPass = "";
+		driver.findElement(By.id("loginId")).sendKeys(MyId);
+		driver.findElement(By.id("loginPwd")).sendKeys(MyPass);
+		
 		driver.findElement(By.className("member_login_order_btn")).click();
 		Thread.sleep(5000);
 		driver.findElement(By.partialLinkText("장바구니")).click();
