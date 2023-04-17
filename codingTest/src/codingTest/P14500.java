@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class pro_14500 {
+public class P14500 {
 	// 테트로미노 : https://www.acmicpc.net/problem/14500
 	private static int N, M;
 	private static int[][] map;

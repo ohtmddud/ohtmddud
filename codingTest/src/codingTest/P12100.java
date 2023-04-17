@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class problem_12100 {
+public class P12100 {
 	// 백준 12100 2048(Easy) (https://www.acmicpc.net/problem/12100)
 	private static int N;
 	private static int[][] map;

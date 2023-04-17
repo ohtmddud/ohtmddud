@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 // 백준 13458 시험 감독관(exam) (https://www.acmicpc.net/problem/13458)
-public class pro_13458 {
+public class P13458 {
 	//시험장 N, 응시자 A, 총감독관 B, 부감독관 C
 	private static int N, B, C;
 	private static int[] A;
 	//필요한 감독관의 최솟값
 	public static void main(String[] args) throws IOException{
-		pro_13458 pro = new pro_13458();
+		P13458 pro = new P13458();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		N = Integer.parseInt(br.readLine());

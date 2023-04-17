@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class pro_14499 {
+public class P14499 {
 	// 주사위 굴리기 https://www.acmicpc.net/problem/14499
 	static int[] dice = new int[7];
 	static int n,m,x,y;

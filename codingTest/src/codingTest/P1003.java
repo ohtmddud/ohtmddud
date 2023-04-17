@@ -2,7 +2,7 @@ package codingTest;
 
 import java.util.Scanner;
 
-public class problem_1003 {
+public class P1003 {
 	public static void main(String[] args) {
 		Scanner key = new Scanner(System.in);
 		int count = key.nextInt();

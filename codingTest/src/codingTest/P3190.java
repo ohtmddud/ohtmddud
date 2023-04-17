@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 //	  6. 현재값 업데이트 
 //	}
 
-public class pro_3190 {
+public class P3190 {
 	// 백준 3190 뱀(dummy) (https://www.acmicpc.net/problem/3190)
 	private static int N, apple, L;
 	private static int[][] map;

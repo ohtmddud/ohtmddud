@@ -25,31 +25,27 @@ public class CJ01 {
 		Stack<Integer> A = new Stack<>();
 
 		for (int i = 0; i < num.length; i++) {
-			for (int j = 0; j < keyboard.length; j++) {
-				if (Integer.parseInt(num[i]) == keyboard[j]) {
-					if(keyboard[j] == A.peek()) {
-						
-					}
-					A.add(keyboard[j]);
-					A.add(keyboard[j + 1]);
+			for (int j = 0; j < 2; j++) {
+				if (keyboard[j] == A.peek()) {
+				}
+				A.add(keyboard[j]);
+				A.add(keyboard[j + 1]);
+				answer++;
+				System.out.println("i: " + i + ", peek: " + A.peek());
+				if (i == num.length - 1 && Integer.parseInt(num[i]) != A.peek()) {
 					answer++;
-					System.out.println("i: "+ i + ", peek: " + A.peek());
-					if (i == num.length - 1 && Integer.parseInt(num[i]) != A.peek()) {
+				} else {
+					if (Integer.parseInt(num[i + 1]) == A.peek()) {
+						i++;
+					} else if (Integer.parseInt(num[i + 1]) != keyboard[j + 1]) {
+						A.pop();
 						answer++;
-					} else {
-						if (Integer.parseInt(num[i + 1]) == A.peek()) {
-							i++;
-						} else if (Integer.parseInt(num[i + 1]) != keyboard[j + 1]) {
-							A.pop();
-							answer++;
-						}
-
 					}
 
 				}
+
 			}
 		}
-
 		return answer;
 	}
 

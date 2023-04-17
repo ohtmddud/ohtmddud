@@ -19,7 +19,7 @@ class Ball{
 	}
 }
 
-public class problem_13460 {
+public class P13460 {
 	static int N,M;
 	static char[][]	map;
 	static Ball red, blue;

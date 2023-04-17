@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class pro_14501 {
+public class P14501 {
 	// 퇴사 https://www.acmicpc.net/problem/14501
 	private static int N;
 	private static int[] T, P;
