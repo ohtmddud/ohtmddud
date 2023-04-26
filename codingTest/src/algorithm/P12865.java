@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 
 public class P12865 {
 	// https://www.acmicpc.net/problem/12865, 평범한 배낭
+	// https://st-lab.tistory.com/141 (해설)
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
