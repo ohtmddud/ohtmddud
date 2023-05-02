@@ -14,7 +14,7 @@ public class P12865_BU1 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
-		int K = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken()); 
 		W = new int[N + 1]; // 무게
 		V = new int[N + 1]; // 가치
 		A = new int[N + 1][K + 1];
